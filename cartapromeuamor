@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carta para Você</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(to top, #4c1d95, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #f8f8f8;
+    overflow: hidden;
+  }
+
+  /* Efeito de nuvens */
+  .cloud {
+    position: absolute;
+    background: #ffffff33;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: moveClouds linear infinite;
+  }
+  @keyframes moveClouds {
+    0% { transform: translateX(-200px); }
+    100% { transform: translateX(100vw); }
+  }
+
+  /* Envelope fechado */
+  .envelope {
+    width: 280px;
+    height: 180px;
+    background: #a78bfa;
+    position: relative;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 1s ease;
+    overflow: hidden;
+  }
+
+  .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 90px;
+    background: #8b5cf6;
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.8s ease;
+  }
+
+  .open .flap {
+    transform: rotateX(180deg);
+  }
+
+  /* Carta */
+  .letter {
+    display: none;
+    background: rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: 85%;
+    max-width: 700px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    margin-top: 1.5rem;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #e0d7f7;
+    white-space: pre-wrap;
+  }
+
+  button {
+    margin-top: 2rem;
+    background-color: #7c3aed;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background-color: #a78bfa;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Nuvens -->
+  <div class="cloud" style="width:150px; height:70px; top:20%; animation-duration:60s;"></div>
+  <div class="cloud" style="width:200px; height:100px; top:50%; animation-duration:90s;"></div>
+  <div class="cloud" style="width:120px; height:60px; top:75%; animation-duration:75s;"></div>
+
+  <!-- Envelope -->
+  <div id="envelope" class="envelope" onclick="openLetter()">
+    <div class="flap"></div>
+  </div>
+
+  <!-- Botão -->
+  <button id="openBtn" onclick="openLetter()">Abrir Carta</button>
+
+  <!-- Carta -->
+  <div id="letter" class="letter"></div>
+
+  <script>
+    const text = `Oi, Yaya.
+
+Eu não sei exatamente como começar isso, mas talvez seja o tipo de coisa que não precisa de uma introdução perfeita. Eu só queria que você soubesse o quanto significa pra mim. Às vezes, pequenas coisas que você faz acabam sendo o que mais me marcam — um cuidado, um sorriso, ou até quando você simplesmente fica ali, do meu lado.
+
+Essa carta é só mais um jeito meu de mostrar o quanto eu me importo, mesmo que as palavras nunca pareçam o bastante. Você é uma das pessoas mais especiais que já apareceram na minha vida, e eu só quero que saiba que cada momento contigo vale mais do que parece.
+
+Com carinho,  
+alguém que te admira pra cacete.`;
+
+    function openLetter() {
+      const envelope = document.getElementById('envelope');
+      const letter = document.getElementById('letter');
+      const btn = document.getElementById('openBtn');
+
+      envelope.classList.add('open');
+      btn.style.display = 'none';
+
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        letter.style.display = 'block';
+        typeText(text, letter, 25);
+      }, 1200); // tempo da animação do envelope
+    }
+
+    function typeText(text, element, speed) {
+      element.textContent = '';
+      let i = 0;
+      const interval = setInterval(() => {
+        element.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(interval);
+      }, speed);
+    }
+  </script>
+
+</body>
+</html>
